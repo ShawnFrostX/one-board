@@ -10,6 +10,7 @@ import ContextMenu from './components/ContextMenu';
 import EdgeContextMenu from './components/EdgeContextMenu';
 import SearchPanel from './components/SearchPanel';
 import ImageViewer from './components/ImageViewer';
+import HelpModal from './components/HelpModal';
 
 const PROJECTS_KEY = 'one-board-projects';
 const SETTINGS_KEY = 'one-board-settings';
@@ -85,6 +86,7 @@ export default function App() {
   const [contextMenu, setContextMenu] = useState(null);
   const [edgeContextMenu, setEdgeContextMenu] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const [selectedNodes, setSelectedNodes] = useState([]);
   const [selectedEdges, setSelectedEdges] = useState([]);
   const [viewingImage, setViewingImage] = useState(null);
@@ -650,6 +652,7 @@ export default function App() {
         setNodeType={setNodeType}
         exportData={exportData}
         importData={importData}
+        onShowHelp={() => setShowHelp(true)}
       />
 
       <div style={{ flex: 1, width: '100%', height: '100%' }}>
@@ -780,6 +783,12 @@ export default function App() {
           imageUrl={viewingImage.imageUrl}
           nodeName={viewingImage.nodeName}
           onClose={() => setViewingImage(null)}
+        />
+      )}
+
+      {showHelp && (
+        <HelpModal
+          onClose={() => setShowHelp(false)}
         />
       )}
 

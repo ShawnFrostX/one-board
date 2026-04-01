@@ -2,29 +2,29 @@ import { useState } from "react";
 
 const nodeStyles = {
   default: {
-    background: "#fef3e6",
-    border: "1px solid #a0846b",
-    color: "#3d2817",
+    background: "#e8dcc8",
+    border: "2px solid #3d3d3d",
+    color: "#1a1a1a",
   },
   person: {
-    background: "#6b4423",
-    border: "2px solid #4a2f1a",
-    color: "#fef3e6",
+    background: "#d4c4a8",
+    border: "2px solid #4a4a4a",
+    color: "#1a1a1a",
   },
   task: {
-    background: "#d97f3e",
-    border: "2px solid #c85a3a",
-    color: "#2d1f10",
+    background: "#f0e6d2",
+    border: "2px solid #8b4513",
+    color: "#2d1810",
   },
   note: {
-    background: "#f4d45e",
-    border: "1px solid #d4a115",
-    color: "#3d2817",
+    background: "#fffacd",
+    border: "2px solid #6b6b6b",
+    color: "#2a2a2a",
   },
   event: {
-    background: "#8b2e2e",
-    border: "2px solid #5a1a1a",
-    color: "#fef3e6",
+    background: "#deb887",
+    border: "2px solid #8b3a3a",
+    color: "#3d2817",
   },
 };
 
@@ -241,8 +241,8 @@ export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
                 style={{
                   display: "inline-block",
                   padding: "10px 16px",
-                  background: "#d97f3e",
-                  color: "white",
+                  background: "#8b4513",
+                  color: "#fff",
                   borderRadius: "8px",
                   cursor: "pointer",
                   fontSize: "13px",
@@ -383,8 +383,8 @@ export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
               style={{
                 flex: 1,
                 padding: "12px",
-                background: "#d97f3e",
-                color: "white",
+                background: "#8b4513",
+                color: "#fff",
                 border: "none",
                 borderRadius: "8px",
                 cursor: "pointer",

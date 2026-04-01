@@ -17,14 +17,14 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
       top: '70px',
       left: '50%',
       transform: 'translateX(-50%)',
-      background: '#3d2817',
-      border: '2px solid #d97f3e',
+      background: '#e8dcc8',
+      border: '2px solid #3d3d3d',
       borderRadius: '2px',
       padding: '16px',
       zIndex: 2000,
       minWidth: '400px',
       maxWidth: '500px',
-      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)'
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{
         display: 'flex',
@@ -32,7 +32,7 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
         justifyContent: 'space-between',
         marginBottom: '12px'
       }}>
-        <h3 style={{ color: '#fff', margin: 0, fontSize: '16px', fontWeight: '600' }}>
+        <h3 style={{ color: '#1a1a1a', margin: 0, fontSize: '16px', fontWeight: '600' }}>
           🔍 Search Nodes
         </h3>
         <button
@@ -40,7 +40,7 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
           style={{
             background: 'none',
             border: 'none',
-            color: '#fff',
+            color: '#1a1a1a',
             fontSize: '20px',
             cursor: 'pointer',
             padding: '0 4px'
@@ -59,10 +59,10 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
         style={{
           width: '100%',
           padding: '10px',
-          background: '#2a2a2a',
-          border: '1px solid #444',
+          background: '#f5f5f0',
+          border: '1px solid #999',
           borderRadius: '6px',
-          color: '#fff',
+          color: '#1a1a1a',
           fontSize: '14px',
           outline: 'none',
           marginBottom: '12px'
@@ -87,33 +87,33 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
               }}
               style={{
                 padding: '12px',
-                background: '#2a2a2a',
-                border: '1px solid #333',
+                background: '#f0e6d2',
+                border: '1px solid #999',
                 borderRadius: '6px',
                 marginBottom: '8px',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.background = '#4a2f1a';
-                e.currentTarget.style.borderColor = '#d97f3e';
+                e.currentTarget.style.background = '#deb887';
+                e.currentTarget.style.borderColor = '#666';
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.background = '#2a2a2a';
-                e.currentTarget.style.borderColor = '#333';
+                e.currentTarget.style.background = '#f0e6d2';
+                e.currentTarget.style.borderColor = '#999';
               }}
             >
               <div style={{
                 fontSize: '14px',
                 fontWeight: '600',
-                color: '#fff',
+                color: '#1a1a1a',
                 marginBottom: '4px'
               }}>
                 {node.data.label}
               </div>
               <div style={{
                 fontSize: '12px',
-                color: '#888',
+                color: '#666',
                 textTransform: 'uppercase'
               }}>
                 {node.data.type || 'default'}
@@ -121,7 +121,7 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
               {node.data.description && (
                 <div style={{
                   fontSize: '12px',
-                  color: '#aaa',
+                  color: '#555',
                   marginTop: '4px'
                 }}>
                   {node.data.description.substring(0, 60)}...

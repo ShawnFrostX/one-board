@@ -107,7 +107,7 @@ export default function EdgeContextMenu({
                 style={{
                   ...buttonStyle,
                   paddingLeft: "20px",
-                  color: currentArrowType === option.type ? "#d97f3e" : "#fff",
+                  color: currentArrowType === option.type ? "#8b4513" : "#fff",
                   fontWeight:
                     currentArrowType === option.type ? "600" : "normal",
                 }}

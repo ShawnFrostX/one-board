@@ -1,4 +1,4 @@
-export default function Topbar({ nodeLabel, setNodeLabel, addNode, clearAll, nodes, edges, nodeType, setNodeType, exportData, importData }) {
+export default function Topbar({ nodeLabel, setNodeLabel, addNode, clearAll, nodes, edges, nodeType, setNodeType, exportData, importData, onShowHelp }) {
   return (
     <div style={{
       background: 'linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)',
@@ -142,6 +142,27 @@ export default function Topbar({ nodeLabel, setNodeLabel, addNode, clearAll, nod
         onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
       >
         📂 Import
+      </button>
+
+      {/* Help Button */}
+      <button
+        onClick={onShowHelp}
+        title="Show help and features"
+        style={{
+          padding: '10px 16px',
+          background: 'rgba(255, 255, 255, 0.2)',
+          color: 'white',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          borderRadius: '8px',
+          cursor: 'pointer',
+          fontSize: '14px',
+          fontWeight: '500',
+          transition: 'all 0.2s'
+        }}
+        onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+        onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+      >
+        ❓ Help
       </button>
 
       {/* Clear Button */}
