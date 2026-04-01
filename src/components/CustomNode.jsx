@@ -35,23 +35,29 @@ export default function CustomNode({ data, id, selected }) {
   const hasCustomColor = data.customColor;
   const isWaypoint = data.isWaypoint;
 
-  // Render waypoint as a small circle
+  // Render waypoint as a small badge with label
   if (isWaypoint) {
     return (
       <div
         onDoubleClick={() => data.onEdit && data.onEdit(id)}
         style={{
-          width: "16px",
-          height: "16px",
-          borderRadius: "50%",
+          padding: "6px 12px",
+          borderRadius: "12px",
           background: "#a0846b",
           border: selected ? "2px solid #dc2626" : "1px solid #6b5847",
           cursor: "pointer",
           boxShadow: selected ? "0 0 0 2px rgba(220, 38, 38, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
           transition: "all 0.2s",
           position: "relative",
+          fontSize: "11px",
+          fontWeight: "600",
+          color: "#fff",
+          whiteSpace: "nowrap",
+          minWidth: "30px",
+          textAlign: "center",
         }}
       >
+        {data.label}
         <Handle
           type="target"
           position={Position.Top}

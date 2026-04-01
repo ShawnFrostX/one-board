@@ -5,6 +5,7 @@ export default function EdgeContextMenu({
   onEdit,
   onDelete,
   onChangeArrow,
+  onCreateWaypoint,
   currentArrowType = "target",
 }) {
   const buttonStyle = {
@@ -70,6 +71,17 @@ export default function EdgeContextMenu({
           </button>
         )}
 
+        {onCreateWaypoint && (
+          <button
+            onClick={onCreateWaypoint}
+            style={buttonStyle}
+            onMouseOver={(e) => (e.target.style.background = "#3a3a3a")}
+            onMouseOut={(e) => (e.target.style.background = "transparent")}
+          >
+            ◉ Create Waypoint
+          </button>
+        )}
+
         {/* Arrow Direction Options */}
         {onChangeArrow && (
           <>
@@ -95,7 +107,7 @@ export default function EdgeContextMenu({
                 style={{
                   ...buttonStyle,
                   paddingLeft: "20px",
-                  color: currentArrowType === option.type ? "#667eea" : "#fff",
+                  color: currentArrowType === option.type ? "#d97f3e" : "#fff",
                   fontWeight:
                     currentArrowType === option.type ? "600" : "normal",
                 }}

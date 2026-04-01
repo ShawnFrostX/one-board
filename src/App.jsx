@@ -275,6 +275,92 @@ export default function App() {
     addToHistory(newNodes, newEdges);
   }, [edges, nodes, addToHistory]);
 
+  const createWaypoint = useCallback((edgeId) => {
+    const edge = edges.find(e => e.id === edgeId);
+    if (!edge) return;
+
+    const sourceNode = nodes.find(n => n.id === edge.source);
+    const targetNode = nodes.find(n => n.id === edge.target);
+    
+    if (sourceNode && targetNode) {
+      // Calculate midpoint between node centers
+      const sourceCenterX = sourceNode.position.x + 100;
+      const sourceCenterY = sourceNode.position.y + 40;
+      const targetCenterX = targetNode.position.x + 100;
+      const targetCenterY = targetNode.position.y + 40;
+      
+      const midX = (sourceCenterX + targetCenterX) / 2 - 8;
+      const midY = (sourceCenterY + targetCenterY) / 2 - 8;
+      
+      // Create waypoint node
+      const waypointId = `waypoint-${Date.now()}`;
+      const waypointNode = {
+        id: waypointId,
+        type: 'custom',
+        position: { x: midX, y: midY },
+        data: { 
+          label: '•', 
+          type: 'default',
+          isWaypoint: true
+        }
+      };
+      
+      // Determine opposite handles for smart routing
+      const getOppositeSide = (handle) => {
+        if (handle?.includes('right')) return 'left';
+        if (handle?.includes('left')) return 'right';
+        if (handle?.includes('top')) return 'bottom';
+        if (handle?.includes('bottom')) return 'top';
+        return 'left'; // default
+      };
+
+      // Extract the side from the handle (e.g., "right-source" -> "right")
+      const getHandleType = (handle) => {
+        if (handle?.includes('target')) return '-target';
+        return '-source';
+      };
+
+      const sourceHandleOpp = getOppositeSide(edge.sourceHandle);
+      const targetHandleOpp = getOppositeSide(edge.targetHandle);
+
+      const newNodes = [...nodes, waypointNode];
+      setNodes(newNodes);
+      
+      // Split the edge
+      const newEdges = edges.map(e => {
+        if (e.id === edgeId) {
+          return { 
+            ...e, 
+            target: waypointId,
+            sourceHandle: e.sourceHandle, // Keep original source handle
+            targetHandle: `${sourceHandleOpp}-target`, // Connect to opposite side on waypoint
+            data: { ...e.data, arrowType: 'source' }
+          };
+        }
+        return e;
+      });
+      
+      // Add second edge from waypoint to target
+      const waypointToTargetEdge = {
+        id: `${waypointId}-${edge.target}`,
+        source: waypointId,
+        target: edge.target,
+        sourceHandle: `${targetHandleOpp}-source`, // Connect from opposite side on waypoint
+        targetHandle: edge.targetHandle, // Keep original target handle
+        label: '',
+        data: { arrowType: edge.data?.arrowType || 'target' }
+      };
+      
+      newEdges.push(waypointToTargetEdge);
+      setEdges(newEdges);
+      addToHistory(newNodes, newEdges);
+      
+      // Open edit modal for the waypoint
+      setEditingNode(waypointNode);
+      setEdgeContextMenu(null);
+    }
+  }, [nodes, edges, addToHistory]);
+
   const updateEdge = useCallback((edgeId, label) => {
     const newEdges = edges.map((edge) =>
       edge.id === edgeId ? { ...edge, label } : edge
@@ -525,72 +611,9 @@ export default function App() {
   }, []);
 
   const handleEdgeDoubleClick = useCallback((edge) => {
-    // Create a waypoint node at the middle of the edge
-    const sourceNode = nodes.find(n => n.id === edge.source);
-    const targetNode = nodes.find(n => n.id === edge.target);
-    
-    if (sourceNode && targetNode) {
-      // Calculate midpoint between node centers (accounting for approximate node size of 200x80)
-      const sourceCenterX = sourceNode.position.x + 100;
-      const sourceCenterY = sourceNode.position.y + 40;
-      const targetCenterX = targetNode.position.x + 100;
-      const targetCenterY = targetNode.position.y + 40;
-      
-      const midX = (sourceCenterX + targetCenterX) / 2 - 8; // Offset by waypoint radius
-      const midY = (sourceCenterY + targetCenterY) / 2 - 8; // Offset by waypoint radius
-      
-      // Create waypoint node
-      const waypointId = `waypoint-${Date.now()}`;
-      const waypointNode = {
-        id: waypointId,
-        type: 'custom',
-        position: { x: midX, y: midY },
-        data: { 
-          label: '•', 
-          type: 'default',
-          isWaypoint: true
-        }
-      };
-      
-      // Update nodes
-      const newNodes = [...nodes, waypointNode];
-      setNodes(newNodes);
-      
-      // Split the original edge: source -> waypoint and waypoint -> target
-      // Keep the same styling to avoid visual shifts
-      const newEdges = edges.map(e => {
-        if (e.id === edge.id) {
-          return { 
-            ...e, 
-            target: waypointId,
-            sourceHandle: e.sourceHandle, // Preserve source handle
-            targetHandle: 'left-target', // Waypoint receives from left
-            data: { ...e.data, arrowType: 'source' } // Pin appears at source side
-          };
-        }
-        return e;
-      });
-      
-      // Add new edge from waypoint to original target with original arrow type
-      // Preserve the target handle to maintain connection point
-      const waypointToTargetEdge = {
-        id: `${waypointId}-${edge.target}`,
-        source: waypointId,
-        target: edge.target,
-        sourceHandle: 'right-source', // Waypoint connects from right
-        targetHandle: edge.targetHandle, // Preserve original target connection point
-        label: '',
-        data: { arrowType: edge.data?.arrowType || 'target' }
-      };
-      
-      newEdges.push(waypointToTargetEdge);
-      setEdges(newEdges);
-      addToHistory(newNodes, newEdges);
-      
-      // Open edit modal for the waypoint to add label
-      setEditingNode(waypointNode);
-    }
-  }, [nodes, edges, addToHistory]);
+    // Double-click to edit edge label
+    setEditingEdge(edge);
+  }, []);
 
   const handleImageClick = useCallback((nodeId) => {
     const node = nodes.find(n => n.id === nodeId);
@@ -733,6 +756,9 @@ export default function App() {
           }}
           onChangeArrow={(arrowType) => {
             updateEdgeArrow(edgeContextMenu.edgeId, arrowType);
+          }}
+          onCreateWaypoint={() => {
+            createWaypoint(edgeContextMenu.edgeId);
           }}
           onDelete={() => {
             deleteEdge(edgeContextMenu.edgeId);
