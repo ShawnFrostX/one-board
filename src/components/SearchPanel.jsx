@@ -4,9 +4,11 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredNodes = nodes.filter(node =>
-    node.data.label?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    node.data.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    node.data.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    !node.data.isWaypoint && (
+      node.data.label?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      node.data.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      node.data.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
 
   return (
@@ -15,9 +17,9 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
       top: '70px',
       left: '50%',
       transform: 'translateX(-50%)',
-      background: '#1a1a1a',
-      border: '2px solid #667eea',
-      borderRadius: '12px',
+      background: '#3d2817',
+      border: '2px solid #d97f3e',
+      borderRadius: '2px',
       padding: '16px',
       zIndex: 2000,
       minWidth: '400px',
@@ -93,8 +95,8 @@ export default function SearchPanel({ nodes, onNodeSelect, onClose }) {
                 transition: 'all 0.2s'
               }}
               onMouseOver={(e) => {
-                e.currentTarget.style.background = '#3a3a3a';
-                e.currentTarget.style.borderColor = '#667eea';
+                e.currentTarget.style.background = '#4a2f1a';
+                e.currentTarget.style.borderColor = '#d97f3e';
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.background = '#2a2a2a';

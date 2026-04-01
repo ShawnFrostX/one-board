@@ -33,6 +33,78 @@ export default function CustomNode({ data, id, selected }) {
   const [showNotes, setShowNotes] = useState(false);
   const nodeType = data.type || "default";
   const hasCustomColor = data.customColor;
+  const isWaypoint = data.isWaypoint;
+
+  // Render waypoint as a small circle
+  if (isWaypoint) {
+    return (
+      <div
+        onDoubleClick={() => data.onEdit && data.onEdit(id)}
+        style={{
+          width: "16px",
+          height: "16px",
+          borderRadius: "50%",
+          background: "#a0846b",
+          border: selected ? "2px solid #dc2626" : "1px solid #6b5847",
+          cursor: "pointer",
+          boxShadow: selected ? "0 0 0 2px rgba(220, 38, 38, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+          transition: "all 0.2s",
+          position: "relative",
+        }}
+      >
+        <Handle
+          type="target"
+          position={Position.Top}
+          id="top-target"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="source"
+          position={Position.Top}
+          id="top-source"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="target"
+          position={Position.Right}
+          id="right-target"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          id="right-source"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="target"
+          position={Position.Bottom}
+          id="bottom-target"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          id="bottom-source"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="target"
+          position={Position.Left}
+          id="left-target"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+        <Handle
+          type="source"
+          position={Position.Left}
+          id="left-source"
+          style={{ width: "8px", height: "8px", background: "#dc2626", opacity: selected ? 1 : 0 }}
+        />
+      </div>
+    );
+  }
+
+  // Normal node rendering
 
   // Use custom color if available, otherwise use type style
   const baseStyle = nodeStyles[nodeType] || nodeStyles.default;
