@@ -50,6 +50,8 @@ export default function CustomNode({ data, id, selected }) {
     borderRadius: "50%",
     border: "2px solid #fff",
     background: "#667eea",
+    opacity: selected ? 1 : 0,
+    transition: "opacity 0.2s",
   };
 
   return (

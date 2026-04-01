@@ -1,14 +1,15 @@
 export default function Topbar({ nodeLabel, setNodeLabel, addNode, clearAll, nodes, edges, nodeType, setNodeType, exportData, importData }) {
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)',
       padding: '16px 24px',
       display: 'flex',
       alignItems: 'center',
       gap: '12px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
       zIndex: 10,
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      borderBottom: '3px solid #5a3a1a'
     }}>
       {/* Logo/Title */}
       <div style={{

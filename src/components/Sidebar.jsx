@@ -36,7 +36,7 @@ export default function Sidebar({
           top: "80px",
           zIndex: 1000,
           padding: "12px 16px",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          background: "linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)",
           color: "white",
           border: "none",
           borderRadius: "8px",
@@ -86,7 +86,7 @@ export default function Sidebar({
               padding: "8px",
               background:
                 activeTab === "connections"
-                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  ? "linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)"
                   : "transparent",
               color: "white",
               border: activeTab === "connections" ? "none" : "1px solid #444",
@@ -106,7 +106,7 @@ export default function Sidebar({
               padding: "8px",
               background:
                 activeTab === "projects"
-                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  ? "linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)"
                   : "transparent",
               color: "white",
               border: activeTab === "projects" ? "none" : "1px solid #444",
@@ -126,7 +126,7 @@ export default function Sidebar({
               padding: "8px",
               background:
                 activeTab === "settings"
-                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  ? "linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)"
                   : "transparent",
               color: "white",
               border: activeTab === "settings" ? "none" : "1px solid #444",
@@ -200,7 +200,7 @@ export default function Sidebar({
                       >
                         <span
                           style={{
-                            color: "#667eea",
+                            color: "#c19a6b",
                             fontWeight: "600",
                           }}
                         >
@@ -267,7 +267,7 @@ export default function Sidebar({
                               width: "100%",
                               padding: "6px 8px",
                               background: "#1a1a1a",
-                              border: "1px solid #667eea",
+                              border: "1px solid #c19a6b",
                               borderRadius: "4px",
                               color: "#fff",
                               fontSize: "12px",
@@ -331,9 +331,9 @@ export default function Sidebar({
                                 }
                                 style={{
                                   padding: "6px 8px",
-                                  background: isActive ? "#667eea" : "#1a1a1a",
+                                  background: isActive ? "#c19a6b" : "#1a1a1a",
                                   color: isActive ? "#fff" : "#aaa",
-                                  border: `1px solid ${isActive ? "#667eea" : "#444"}`,
+                                  border: `1px solid ${isActive ? "#c19a6b" : "#444"}`,
                                   borderRadius: "4px",
                                   cursor: "pointer",
                                   fontSize: "11px",
@@ -471,7 +471,7 @@ export default function Sidebar({
               style={{
                 width: "100%",
                 padding: "12px",
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                background: "linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)",
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
@@ -521,7 +521,7 @@ export default function Sidebar({
                     style={{
                       background:
                         project.id === currentProjectId ? "#3a3a3a" : "#2a2a2a",
-                      border: `1px solid ${project.id === currentProjectId ? "#667eea" : "#333"}`,
+                      border: `1px solid ${project.id === currentProjectId ? "#c19a6b" : "#333"}`,
                       borderRadius: "6px",
                       padding: "10px",
                       cursor: "pointer",
@@ -604,6 +604,33 @@ export default function Sidebar({
             <div
               style={{ display: "flex", flexDirection: "column", gap: "12px" }}
             >
+              {/* Cork Board Option */}
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "12px",
+                  background:
+                    backgroundType === 'corkboard' ? "#2a2a2a" : "#1a1a1a",
+                  border: `2px solid ${backgroundType === 'corkboard' ? "#c19a6b" : "#333"}`,
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+              >
+                <input
+                  type="radio"
+                  name="background"
+                  value="corkboard"
+                  checked={backgroundType === 'corkboard'}
+                  onChange={(e) => setBackgroundType(e.target.value)}
+                  style={{ marginRight: "10px", cursor: "pointer" }}
+                />
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>
+                  Cork Board
+                </span>
+              </label>
+
               {/* Dots Option */}
               <label
                 style={{
@@ -611,7 +638,7 @@ export default function Sidebar({
                   alignItems: "center",
                   padding: "12px",
                   background: backgroundType === "dots" ? "#2a2a2a" : "#1a1a1a",
-                  border: `2px solid ${backgroundType === "dots" ? "#667eea" : "#333"}`,
+                  border: `2px solid ${backgroundType === "dots" ? "#c19a6b" : "#333"}`,
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.2s",
@@ -637,7 +664,7 @@ export default function Sidebar({
                   alignItems: "center",
                   padding: "12px",
                   background: backgroundType === "grid" ? "#2a2a2a" : "#1a1a1a",
-                  border: `2px solid ${backgroundType === "grid" ? "#667eea" : "#333"}`,
+                  border: `2px solid ${backgroundType === "grid" ? "#c19a6b" : "#333"}`,
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.2s",
@@ -664,7 +691,7 @@ export default function Sidebar({
                   padding: "12px",
                   background:
                     backgroundType === "detective" ? "#2a2a2a" : "#1a1a1a",
-                  border: `2px solid ${backgroundType === "detective" ? "#667eea" : "#333"}`,
+                  border: `2px solid ${backgroundType === "detective" ? "#c19a6b" : "#333"}`,
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.2s",
@@ -691,7 +718,7 @@ export default function Sidebar({
                   padding: "12px",
                   background:
                     backgroundType === "custom" ? "#2a2a2a" : "#1a1a1a",
-                  border: `2px solid ${backgroundType === "custom" ? "#667eea" : "#333"}`,
+                  border: `2px solid ${backgroundType === "custom" ? "#c19a6b" : "#333"}`,
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.2s",

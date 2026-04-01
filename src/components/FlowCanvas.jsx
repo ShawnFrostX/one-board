@@ -23,7 +23,7 @@ function FlowCanvasInner({
   reactFlowInstance
 }) {
   const reactFlow = useReactFlow();
-  const { screenToFlowPosition, setCenter } = reactFlow;
+  const { screenToFlowPosition } = reactFlow;
 
   // Expose ReactFlow instance to parent
   if (reactFlowInstance) {
@@ -48,8 +48,7 @@ function FlowCanvasInner({
   };
 
   const renderBackground = () => {
-    if (backgroundType === 'detective' || (backgroundType === 'custom' && customBgUrl)) {
-      const imageUrl = backgroundType === 'detective' ? detectiveBoardUrl : customBgUrl;
+    if (backgroundType === 'custom' && customBgUrl) {
       return (
         <div style={{
           position: 'absolute',
@@ -57,11 +56,11 @@ function FlowCanvasInner({
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${customBgUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'repeat',
-          opacity: 0.25,
+          opacity: 0.5,
           pointerEvents: 'none',
           zIndex: 0
         }} />
@@ -69,13 +68,52 @@ function FlowCanvasInner({
     }
 
     // For dots and grid patterns
-    const variant = backgroundType === 'grid' ? 'lines' : 'dots';
-    return <Background color="#aaa" gap={16} variant={variant} />;
+    if (backgroundType === 'dots' || backgroundType === 'grid') {
+      const variant = backgroundType === 'grid' ? 'lines' : 'dots';
+      return <Background color="#8b5a2b" gap={16} variant={variant} />;
+    }
+
+    return null; // No background for 'none' or unrecognized types
   };
+
+  const processedEdges = edges.map(edge => {
+    const arrowType = edge.data?.arrowType || 'target';
+    const isSelected = edge.selected;
+
+    const pinMarker = isSelected ? 'url(#pin-marker-selected)' : 'url(#pin-marker)';
+
+    const edgeStyle = {
+      stroke: isSelected ? '#f97316' : '#dc2626',
+      strokeWidth: isSelected ? 3.5 : 2.5,
+      strokeLinecap: 'round'
+    };
+
+    switch (arrowType) {
+      case 'source':
+        edgeStyle.markerStart = pinMarker;
+        break;
+      case 'target':
+        edgeStyle.markerEnd = pinMarker;
+        break;
+      case 'both':
+        edgeStyle.markerStart = pinMarker;
+        edgeStyle.markerEnd = pinMarker;
+        break;
+      case 'none':
+        break;
+    }
+
+    const {markerStart, markerEnd, style, ...restEdge} = edge;
+
+    return {
+      ...restEdge,
+      style: edgeStyle
+    };
+  });
 
   const defaultEdgeOptions = {
     animated: false,
-    style: { stroke: '#667eea', strokeWidth: 2 },
+    style: { stroke: '#dc2626', strokeWidth: 2.5, strokeLinecap: 'round' },
     labelStyle: {
       fill: '#fff',
       fontWeight: 600,
@@ -97,7 +135,7 @@ function FlowCanvasInner({
   return (
     <ReactFlow
       nodes={nodes}
-      edges={edges}
+      edges={processedEdges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
@@ -112,6 +150,35 @@ function FlowCanvasInner({
       deleteKeyCode="Delete"
       multiSelectionKeyCode="Shift"
     >
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <marker
+            id="pin-marker"
+            viewBox ="0 0 20 20"
+            markerWidth="15"
+            markerHeight="15"
+            refX="8"
+            refY="10"
+            orient="auto"
+          >
+            <circle cx="10" cy="10" r="5" fill="#dc2626" stroke="#8b0000" strokeWidth="1.5" />
+            <circle cx="10" cy="10" r="2" fill="#b91c1c" />
+          </marker>
+          <marker
+            id="pin-marker-selected"
+            viewBox ="0 0 20 20"
+            markerWidth="17"
+            markerHeight="17"
+            refX="8"
+            refY="10"
+            orient="auto"
+          >
+            <circle cx="10" cy="10" r="5" fill="#f97316" stroke="#ea580c" strokeWidth="2" />
+            <circle cx="10" cy="10" r="2.5" fill="#fb923c" />
+          </marker>
+        </defs>
+      </svg>
+
       {renderBackground()}
       <Controls />
     </ReactFlow>
@@ -119,8 +186,53 @@ function FlowCanvasInner({
 }
 
 export default function FlowCanvas(props) {
+  const { backgroundType } = props;
+  const isCorkBoard = backgroundType === 'corkboard' || (!backgroundType);
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <style>{`
+        .react-flow__edges {
+          z-index:1000 !important;
+        }
+        .react-flow__edge path {
+          pointer-events: stroke;
+        }
+        ${isCorkBoard ? `
+        .react-flow__pane {
+          background-color: #c19a6b !important;
+          background-image: 
+            repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              rgba(139,90,43,0.03) 2px,
+              rgba(139,90,43,0.03) 4px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 2px,
+              rgba(139,90,43,0.03) 2px,
+              rgba(139,90,43,0.03) 4px
+            ),
+            repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 3px,
+              rgba(160,110,60,0.02) 3px,
+              rgba(160,110,60,0.02) 6px
+            ),
+            repeating-linear-gradient(
+              -45deg,
+              transparent,
+              transparent 3px,
+              rgba(160,110,60,0.02) 3px,
+              rgba(160,110,60,0.02) 6px
+            );
+        }
+        ` : ''}
+      `}</style>
       <FlowCanvasInner {...props} />
     </div>
   );

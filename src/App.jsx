@@ -24,7 +24,6 @@ const initialEdges = [{
   source: 'n1',
   target: 'n2',
   label: '',
-  markerEnd: { type: 'arrowclosed', color: '#667eea' },
   data: { arrowType: 'target' }
 }];
 
@@ -58,7 +57,7 @@ const loadSettings = () => {
   } catch (error) {
     console.error('Error loading settings:', error);
   }
-  return { backgroundType: 'dots', customBgUrl: '', autoSave: true };
+  return { backgroundType: 'corkboard', customBgUrl: '', autoSave: true };
 };
 
 // Load current project ID
@@ -87,6 +86,7 @@ export default function App() {
   const [edgeContextMenu, setEdgeContextMenu] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedNodes, setSelectedNodes] = useState([]);
+  const [selectedEdges, setSelectedEdges] = useState([]);
   const [viewingImage, setViewingImage] = useState(null);
 
   // ReactFlow instance ref for accessing methods
@@ -175,8 +175,16 @@ export default function App() {
   );
 
   const onEdgesChange = useCallback(
-    (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    [],
+    (changes) => {
+      const newEdges = applyEdgeChanges(changes, edges);
+      setEdges(newEdges);
+
+      const selectionChange = changes.some(c => c.type === 'select');
+      if (selectionChange) {
+        setSelectedEdges(newEdges.filter(e => e.selected).map(e => e.id));
+      }
+    },
+    [edges],
   );
 
   const onConnect = useCallback(
@@ -184,7 +192,6 @@ export default function App() {
       const newEdges = addEdge({
         ...params,
         label: '',
-        markerEnd: { type: 'arrowclosed', color: '#667eea' },
         data: { arrowType: 'target' } // default: arrow at target
       }, edges);
       setEdges(newEdges);
@@ -215,12 +222,15 @@ export default function App() {
     const newEdges = edges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId);
     setNodes(newNodes);
     setEdges(newEdges);
+    setSelectedNodes([]);
+    setSelectedEdges([]);
     addToHistory(newNodes, newEdges);
   }, [nodes, edges, addToHistory]);
 
   const deleteEdge = useCallback((edgeId) => {
     const newEdges = edges.filter((edge) => edge.id !== edgeId);
     setEdges(newEdges);
+    setSelectedEdges([]);
     addToHistory(nodes, newEdges);
   }, [edges, nodes, addToHistory]);
 
@@ -235,31 +245,8 @@ export default function App() {
   const updateEdgeArrow = useCallback((edgeId, arrowType) => {
     const newEdges = edges.map((edge) => {
       if (edge.id === edgeId) {
-        let markerStart = undefined;
-        let markerEnd = undefined;
-
-        switch (arrowType) {
-          case 'target':
-            markerEnd = { type: 'arrowclosed', color: '#667eea' };
-            break;
-          case 'source':
-            markerStart = { type: 'arrowclosed', color: '#667eea' };
-            break;
-          case 'both':
-            markerStart = { type: 'arrowclosed', color: '#667eea' };
-            markerEnd = { type: 'arrowclosed', color: '#667eea' };
-            break;
-          case 'none':
-            // No arrows
-            break;
-          default:
-            markerEnd = { type: 'arrowclosed', color: '#667eea' };
-        }
-
         return {
           ...edge,
-          markerStart,
-          markerEnd,
           data: { ...edge.data, arrowType }
         };
       }
@@ -416,9 +403,14 @@ export default function App() {
         redo();
       }
       // Delete: Delete or Backspace (ONLY when NOT typing)
-      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedNodes.length > 0 && !editingNode && !editingEdge && !showSearch && !isTyping) {
+      if ((e.key === 'Delete' || e.key === 'Backspace') && !editingNode && !editingEdge && !showSearch && !isTyping) {
         e.preventDefault();
-        selectedNodes.forEach(nodeId => deleteNode(nodeId));
+        if (selectedNodes.length > 0) {
+          selectedNodes.forEach(nodeId => deleteNode(nodeId));
+        }
+        if (selectedEdges.length > 0) {
+          selectedEdges.forEach(edgeId => deleteEdge(edgeId));
+        }
       }
       // Duplicate: Cmd/Ctrl + D (prevent when typing)
       if ((e.metaKey || e.ctrlKey) && e.key === 'd' && selectedNodes.length > 0 && !isTyping) {
@@ -439,14 +431,16 @@ export default function App() {
         setViewingImage(null);
         if (!editingNode) {
           setSelectedNodes([]);
+          setSelectedEdges([]);
           setNodes(prev => prev.map(n => ({ ...n, selected: false })));
+          setEdges(prev => prev.map(e => ({ ...e, selected: false })));
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [undo, redo, selectedNodes, deleteNode, duplicateNode, editingNode, editingEdge, showSearch]);
+  }, [undo, redo, selectedNodes, selectedEdges, deleteNode, deleteEdge, duplicateNode, editingNode, editingEdge, showSearch]);
 
   // Double-click to add node
   const handlePaneDoubleClick = useCallback((position) => {
