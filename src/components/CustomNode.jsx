@@ -3,29 +3,29 @@ import { useState } from "react";
 
 const nodeStyles = {
   default: {
-    background: "#ffffff",
-    border: "2px solid #667eea",
-    color: "#333",
+    background: "#fef3e6",
+    border: "1px solid #a0846b",
+    color: "#3d2817",
   },
   person: {
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    border: "2px solid #764ba2",
-    color: "#fff",
+    background: "#6b4423",
+    border: "2px solid #4a2f1a",
+    color: "#fef3e6",
   },
   task: {
-    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    border: "2px solid #f5576c",
-    color: "#fff",
+    background: "#d97f3e",
+    border: "2px solid #c85a3a",
+    color: "#2d1f10",
   },
   note: {
-    background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    border: "2px solid #00f2fe",
-    color: "#fff",
+    background: "#f4d45e",
+    border: "1px solid #d4a115",
+    color: "#3d2817",
   },
   event: {
-    background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-    border: "2px solid #38f9d7",
-    color: "#fff",
+    background: "#8b2e2e",
+    border: "2px solid #5a1a1a",
+    color: "#fef3e6",
   },
 };
 
@@ -48,8 +48,8 @@ export default function CustomNode({ data, id, selected }) {
     width: "12px",
     height: "12px",
     borderRadius: "50%",
-    border: "2px solid #fff",
-    background: "#667eea",
+    border: "2px solid #8b0000",
+    background: "#dc2626",
     opacity: selected ? 1 : 0,
     transition: "opacity 0.2s",
   };
@@ -61,15 +61,17 @@ export default function CustomNode({ data, id, selected }) {
       onMouseLeave={() => setShowNotes(false)}
       style={{
         padding: "12px",
-        borderRadius: "12px",
+        borderRadius: "2px",
         minWidth: "140px",
         maxWidth: "200px",
         boxShadow: selected
-          ? "0 0 0 2px #667eea"
-          : "0 4px 12px rgba(0, 0, 0, 0.15)",
+          ? "0 0 0 2px #dc2626, 0 8px 16px rgba(0, 0, 0, 0.2)"
+          : "0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
         cursor: "pointer",
         transition: "transform 0.2s, box-shadow 0.2s",
         position: "relative",
+        border: "1px solid rgba(0, 0, 0, 0.1)",
+        background: "#f5e6d3",
         ...style,
       }}
     >
@@ -255,20 +257,20 @@ export default function CustomNode({ data, id, selected }) {
             transform: "translateX(-50%)",
             marginBottom: "8px",
             padding: "8px 12px",
-            background: "#1a1a1a",
-            border: "1px solid #444",
-            borderRadius: "6px",
-            color: "#fff",
+            background: "#3d2817",
+            border: "1px solid #8b6f47",
+            borderRadius: "2px",
+            color: "#f5e6d3",
             fontSize: "12px",
             maxWidth: "250px",
             whiteSpace: "pre-wrap",
             zIndex: 1000,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.4)",
             pointerEvents: "none",
           }}
         >
           <div
-            style={{ fontWeight: "600", marginBottom: "4px", color: "#667eea" }}
+            style={{ fontWeight: "600", marginBottom: "4px", color: "#f4d4b8" }}
           >
             📝 Notes:
           </div>
@@ -281,8 +283,8 @@ export default function CustomNode({ data, id, selected }) {
               transform: "translateX(-50%)",
               width: "12px",
               height: "12px",
-              background: "#1a1a1a",
-              border: "1px solid #444",
+              background: "#3d2817",
+              border: "1px solid #8b6f47",
               borderTop: "none",
               borderLeft: "none",
               transform: "translateX(-50%) rotate(45deg)",

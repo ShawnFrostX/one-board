@@ -1,10 +1,42 @@
 import { useState } from "react";
 
+const nodeStyles = {
+  default: {
+    background: "#fef3e6",
+    border: "1px solid #a0846b",
+    color: "#3d2817",
+  },
+  person: {
+    background: "#6b4423",
+    border: "2px solid #4a2f1a",
+    color: "#fef3e6",
+  },
+  task: {
+    background: "#d97f3e",
+    border: "2px solid #c85a3a",
+    color: "#2d1f10",
+  },
+  note: {
+    background: "#f4d45e",
+    border: "1px solid #d4a115",
+    color: "#3d2817",
+  },
+  event: {
+    background: "#8b2e2e",
+    border: "2px solid #5a1a1a",
+    color: "#fef3e6",
+  },
+};
+
 export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
   const [imageUrl, setImageUrl] = useState(node?.data.imageUrl || "");
   const [imagePreview, setImagePreview] = useState(node?.data.imageUrl || "");
 
   if (!node) return null;
+
+  // Get the default color based on node type
+  const nodeType = node.data.type || "default";
+  const defaultColor = node.data.customColor || nodeStyles[nodeType]?.background || "#fef3e6";
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -209,8 +241,7 @@ export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
                 style={{
                   display: "inline-block",
                   padding: "10px 16px",
-                  background:
-                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  background: "#d97f3e",
                   color: "white",
                   borderRadius: "8px",
                   cursor: "pointer",
@@ -328,7 +359,7 @@ export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
             <input
               type="color"
               name="customColor"
-              defaultValue={node.data.customColor || "#667eea"}
+              defaultValue={defaultColor}
               style={{
                 width: "100%",
                 height: "40px",
@@ -352,7 +383,7 @@ export default function EditNodeModal({ node, onClose, onUpdate, onDelete }) {
               style={{
                 flex: 1,
                 padding: "12px",
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                background: "#d97f3e",
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
