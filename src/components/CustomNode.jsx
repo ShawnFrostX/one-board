@@ -3,29 +3,29 @@ import { useState } from "react";
 
 const nodeStyles = {
   default: {
-    background: "#e8dcc8",
-    border: "2px solid #3d3d3d",
+    background: "#C8AAAA",
+    border: "2px solid #574964",
     color: "#1a1a1a",
   },
   person: {
-    background: "#d4c4a8",
-    border: "2px solid #4a4a4a",
+    background: "#C8AAAA",
+    border: "2px solid #9F8383",
     color: "#1a1a1a",
   },
   task: {
-    background: "#f0e6d2",
-    border: "2px solid #8b4513",
-    color: "#2d1810",
+    background: "#9F8383",
+    border: "2px solid #574964",
+    color: "#fef3e6",
   },
   note: {
-    background: "#fffacd",
-    border: "2px solid #6b6b6b",
-    color: "#2a2a2a",
+    background: "#FFDAB3",
+    border: "2px solid #574964",
+    color: "#2d1810",
   },
   event: {
-    background: "#deb887",
-    border: "2px solid #8b3a3a",
-    color: "#3d2817",
+    background: "#574964",
+    border: "2px solid #3a3848",
+    color: "#FFDAB3",
   },
 };
 
@@ -43,15 +43,15 @@ export default function CustomNode({ data, id, selected }) {
         style={{
           padding: "6px 12px",
           borderRadius: "12px",
-          background: "#d4c4a8",
-          border: selected ? "2px solid #8b3a3a" : "2px solid #666",
+          background: "#9F8383",
+          border: selected ? "2px solid #574964" : "2px solid #6b5b6f",
           cursor: "pointer",
-          boxShadow: selected ? "0 0 0 2px rgba(139, 58, 58, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+          boxShadow: selected ? "0 0 0 2px rgba(87, 73, 100, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
           transition: "all 0.2s",
           position: "relative",
           fontSize: "11px",
           fontWeight: "600",
-          color: "#2a2a2a",
+          color: "#fef3e6",
           whiteSpace: "nowrap",
           minWidth: "30px",
           textAlign: "center",
@@ -143,13 +143,13 @@ export default function CustomNode({ data, id, selected }) {
         minWidth: "140px",
         maxWidth: "200px",
         boxShadow: selected
-          ? "0 0 0 2px #8b4513, 0 8px 16px rgba(139, 69, 19, 0.2)"
-          : "0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+          ? "0 0 0 2px #574964, 0 8px 16px rgba(87, 73, 100, 0.2)"
+          : "0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
         cursor: "pointer",
         transition: "transform 0.2s, box-shadow 0.2s",
         position: "relative",
-        border: "1px solid rgba(100, 100, 100, 0.4)",
-        background: "#e8dcc8",
+        border: "1px solid rgba(87, 73, 100, 0.2)",
+        background: "#C8AAAA",
         ...style,
       }}
     >
@@ -335,20 +335,20 @@ export default function CustomNode({ data, id, selected }) {
             transform: "translateX(-50%)",
             marginBottom: "8px",
             padding: "8px 12px",
-            background: "#d4c4a8",
-            border: "1px solid #666",
+            background: "#9F8383",
+            border: "1px solid #574964",
             borderRadius: "2px",
-            color: "#1a1a1a",
+            color: "#fef3e6",
             fontSize: "12px",
             maxWidth: "250px",
             whiteSpace: "pre-wrap",
             zIndex: 1000,
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0 4px 12px rgba(87, 73, 100, 0.2)",
             pointerEvents: "none",
           }}
         >
           <div
-            style={{ fontWeight: "600", marginBottom: "4px", color: "#8b4513" }}
+            style={{ fontWeight: "600", marginBottom: "4px", color: "#FFDAB3" }}
           >
             📝 Notes:
           </div>
@@ -361,8 +361,8 @@ export default function CustomNode({ data, id, selected }) {
               transform: "translateX(-50%)",
               width: "12px",
               height: "12px",
-              background: "#d4c4a8",
-              border: "1px solid #666",
+              background: "#9F8383",
+              border: "1px solid #574964",
               borderTop: "none",
               borderLeft: "none",
               transform: "translateX(-50%) rotate(45deg)",

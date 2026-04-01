@@ -1,189 +1,185 @@
 export default function Topbar({ nodeLabel, setNodeLabel, addNode, clearAll, nodes, edges, nodeType, setNodeType, exportData, importData, onShowHelp }) {
+  const buttonStyle = {
+    padding: '8px 14px',
+    background: 'rgba(255, 255, 255, 0.15)',
+    color: 'white',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '12px',
+    fontWeight: '500',
+    transition: 'all 0.2s',
+    whiteSpace: 'nowrap',
+  };
+
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%)',
-      padding: '16px 24px',
+      background: 'linear-gradient(135deg, #a7803c 0%, #8d6a3c 100%)',
+      padding: '12px 20px',
       display: 'flex',
       alignItems: 'center',
-      gap: '12px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+      gap: '16px',
+      boxShadow: '0 3px 8px rgba(0, 0, 0, 0.15)',
       zIndex: 10,
-      flexWrap: 'wrap',
-      borderBottom: '3px solid #5a3a1a'
+      flexWrap: 'nowrap',
+      borderBottom: '2px solid #8b6f47',
+      minHeight: 'auto',
     }}>
       {/* Logo/Title */}
       <div style={{
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: 'bold',
-        color: 'white',
-        marginRight: '8px',
+        color: '#3d2817',
         display: 'flex',
         alignItems: 'center',
-        gap: '8px'
+        gap: '8px',
+        marginRight: '8px',
+        borderRight: '1px solid rgba(61, 40, 23, 0.2)',
+        paddingRight: '16px',
+        minWidth: 'fit-content',
       }}>
-        <span style={{ fontSize: '24px' }}>📋</span>
         <span>One Board</span>
       </div>
 
-      {/* Node Type Selector */}
-      <select
-        value={nodeType}
-        onChange={(e) => setNodeType(e.target.value)}
-        style={{
-          padding: '10px 16px',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '14px',
-          outline: 'none',
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          color: '#333',
-          cursor: 'pointer',
-          fontWeight: '500'
-        }}
-      >
-        <option value="default">Default</option>
-        <option value="person">Person</option>
-        <option value="task">Task</option>
-        <option value="note">Note</option>
-        <option value="event">Event</option>
-      </select>
+      {/* Node Creation Section */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        minWidth: 'fit-content',
+      }}>
+        <select
+          value={nodeType}
+          onChange={(e) => setNodeType(e.target.value)}
+          style={{
+            padding: '8px 10px',
+            border: '1px solid #8b6f47',
+            borderRadius: '4px',
+            fontSize: '12px',
+            outline: 'none',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            color: '#3d2817',
+            cursor: 'pointer',
+            fontWeight: '500',
+          }}
+        >
+          <option value="default" style={{ color: '#1a1a1a' }}>Default</option>
+          <option value="person" style={{ color: '#1a1a1a' }}>Person</option>
+          <option value="task" style={{ color: '#1a1a1a' }}>Task</option>
+          <option value="note" style={{ color: '#1a1a1a' }}>Note</option>
+          <option value="event" style={{ color: '#1a1a1a' }}>Event</option>
+        </select>
 
-      {/* Input for node label */}
-      <input
-        type="text"
-        placeholder="Node name..."
-        value={nodeLabel}
-        onChange={(e) => setNodeLabel(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && addNode()}
-        style={{
-          padding: '10px 16px',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '14px',
-          outline: 'none',
-          minWidth: '200px',
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          color: '#333',
-          transition: 'all 0.2s'
-        }}
-      />
+        <input
+          type="text"
+          placeholder="Node name..."
+          value={nodeLabel}
+          onChange={(e) => setNodeLabel(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && addNode()}
+          style={{
+            padding: '8px 12px',
+            border: '1px solid #8b6f47',
+            borderRadius: '4px',
+            fontSize: '12px',
+            outline: 'none',
+            minWidth: '160px',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            color: '#3d2817',
+            transition: 'all 0.2s',
+          }}
+          onFocus={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'}
+          onBlur={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'}
+        />
 
-      {/* Add Node Button */}
-      <button
-        onClick={addNode}
-        style={{
-          padding: '10px 24px',
-          background: 'white',
-          color: '#667eea',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '600',
-          transition: 'all 0.2s',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-        }}
-        onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
-        onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
-      >
-        ➕ Add Node
-      </button>
+        <button
+          onClick={addNode}
+          style={{
+            ...buttonStyle,
+            background: 'rgba(139, 69, 19, 0.2)',
+            color: '#3d2817',
+            border: '1px solid rgba(139, 69, 19, 0.3)',
+            fontWeight: '600',
+          }}
+          onMouseOver={(e) => e.target.style.background = 'rgba(139, 69, 19, 0.3)'}
+          onMouseOut={(e) => e.target.style.background = 'rgba(139, 69, 19, 0.2)'}
+        >
+          ➕ Add
+        </button>
+      </div>
+
+      {/* Spacer */}
+      <div style={{ flex: 1 }} />
 
       {/* Stats */}
       <div style={{
-        padding: '8px 16px',
-        background: 'rgba(255, 255, 255, 0.2)',
-        borderRadius: '8px',
-        color: 'white',
-        fontSize: '13px',
+        padding: '6px 12px',
+        background: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: '4px',
+        color: 'rgba(255, 255, 255, 0.9)',
+        fontSize: '12px',
         fontWeight: '500',
-        marginLeft: 'auto'
+        border: '1px solid rgba(255, 255, 255, 0.15)',
+        minWidth: 'fit-content',
       }}>
-        Nodes: {nodes.length} | Edges: {edges.length}
+        📊 {nodes.length}N • {edges.length}E
       </div>
 
-      {/* Export Button */}
-      <button
-        onClick={exportData}
-        title="Export to JSON file"
-        style={{
-          padding: '10px 16px',
-          background: 'rgba(255, 255, 255, 0.2)',
-          color: 'white',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'all 0.2s'
-        }}
-        onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-        onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
-      >
-        💾 Export
-      </button>
+      {/* Action Buttons */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+      }}>
+        <button
+          onClick={exportData}
+          title="Export to JSON"
+          style={buttonStyle}
+          onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.25)'}
+          onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.15)'}
+        >
+          💾 Export
+        </button>
 
-      {/* Import Button */}
-      <button
-        onClick={importData}
-        title="Import from JSON file"
-        style={{
-          padding: '10px 16px',
-          background: 'rgba(255, 255, 255, 0.2)',
-          color: 'white',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'all 0.2s'
-        }}
-        onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-        onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
-      >
-        📂 Import
-      </button>
+        <button
+          onClick={importData}
+          title="Import from JSON"
+          style={buttonStyle}
+          onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.25)'}
+          onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.15)'}
+        >
+          📂 Import
+        </button>
 
-      {/* Help Button */}
-      <button
-        onClick={onShowHelp}
-        title="Show help and features"
-        style={{
-          padding: '10px 16px',
-          background: 'rgba(255, 255, 255, 0.2)',
-          color: 'white',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'all 0.2s'
-        }}
-        onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-        onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
-      >
-        ❓ Help
-      </button>
+        <button
+          onClick={onShowHelp}
+          title="Show help"
+          style={buttonStyle}
+          onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.25)'}
+          onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.15)'}
+        >
+          ❓ Help
+        </button>
 
-      {/* Clear Button */}
-      <button
-        onClick={clearAll}
-        style={{
-          padding: '10px 16px',
+        <div style={{
+          width: '1px',
+          height: '20px',
           background: 'rgba(255, 255, 255, 0.2)',
-          color: 'white',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'all 0.2s'
-        }}
-        onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-        onMouseOut={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
-      >
-        🗑️ Clear
-      </button>
+          margin: '0 4px',
+        }} />
+
+        <button
+          onClick={clearAll}
+          style={{
+            ...buttonStyle,
+            background: 'rgba(255, 87, 87, 0.2)',
+            borderColor: 'rgba(255, 87, 87, 0.3)',
+          }}
+          onMouseOver={(e) => e.target.style.background = 'rgba(255, 87, 87, 0.3)'}
+          onMouseOut={(e) => e.target.style.background = 'rgba(255, 87, 87, 0.2)'}
+        >
+          🗑️ Clear
+        </button>
+      </div>
     </div>
   );
 }

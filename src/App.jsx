@@ -791,21 +791,6 @@ export default function App() {
           onClose={() => setShowHelp(false)}
         />
       )}
-
-      {/* Keyboard Shortcuts Help */}
-      <div style={{
-        position: 'fixed',
-        bottom: '10px',
-        left: '10px',
-        background: 'rgba(26, 26, 26, 0.9)',
-        padding: '8px 12px',
-        borderRadius: '6px',
-        fontSize: '11px',
-        color: '#888',
-        zIndex: 100
-      }}>
-        <kbd>Ctrl/Cmd+Z</kbd> Undo • <kbd>Ctrl/Cmd+Y</kbd> Redo • <kbd>Ctrl/Cmd+F</kbd> Search • <kbd>Ctrl/Cmd+D</kbd> Duplicate • <kbd>Del</kbd> Delete
-      </div>
     </div>
   );
 }
